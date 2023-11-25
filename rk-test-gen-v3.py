@@ -1,5 +1,5 @@
 from openai import OpenAI
-
+from docx import Document
 
 client = OpenAI()
 
@@ -12,10 +12,9 @@ completion = client.chat.completions.create(
 )
 
 
-generated_message = str(completion.choices[0].message)
+generated_text = str(completion.choices[0].message)
 
-# Save the text in a file
-with open("generated_text.txt", "w") as file:
-    file.write(generated_message.strip())
-
-print("The Text Has Been Generated Successfully!")
+# Save the generated text as a Word document
+document = Document()
+document.add_paragraph(generated_text)
+document.save('generated_text.docx')
